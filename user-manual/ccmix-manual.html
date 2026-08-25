@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>CloudCast Mixer User Manual</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700&family=IBM+Plex+Sans:ital,wght@0,400;0,600;1,400&family=IBM+Plex+Mono:wght@400;600&display=swap">
+<style>
+:root{
+  /* CCM: the desk's graphite, the mark's red ramp. Accent pair from the brand
+     kit — #f87171 carries text on dark, #b91c1c on light (CCM-277). */
+  --bg:#0d1117; --surface:#151a22; --stage:#1c232e; --ink:#e6edf3; --muted:#8b9bb0;
+  --acc:#f87171; --acc-2:#dc2626; --line:#28303c;
+  --display:'Archivo',system-ui,sans-serif;
+  --body:'IBM Plex Sans',system-ui,sans-serif;
+  --mono:'IBM Plex Mono',ui-monospace,SFMono-Regular,Menlo,monospace;
+}
+@media (prefers-color-scheme:light){
+  :root{
+    --bg:#ffffff; --surface:#faf7f6; --stage:#f1eceb; --ink:#14171d; --muted:#5b6270;
+    /* The ramp steps down on a light surface: #f87171 on white is 2.6:1 and
+       unreadable, so light mode reads with the kit's #b91c1c (5.9:1). */
+    --acc:#b91c1c; --acc-2:#dc2626; --line:#e2dad8;
+  }
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--body);
+  font-size:16px;line-height:1.65;-webkit-font-smoothing:antialiased}
+.wrap{display:grid;grid-template-columns:290px minmax(0,1fr);gap:0;max-width:1440px;margin:0 auto}
+nav{position:sticky;top:0;align-self:start;height:100vh;overflow-y:auto;padding:26px 18px 60px;
+  border-right:1px solid var(--line);background:var(--surface)}
+.brand{display:flex;align-items:center;gap:10px;margin-bottom:22px;text-decoration:none;color:inherit}
+.brand .name{font-family:var(--display);font-weight:600;letter-spacing:-.01em;font-size:17px}
+.brand .name em{font-style:normal;color:var(--acc)}
+nav a{display:block;text-decoration:none;color:var(--muted);padding:5px 10px;border-radius:7px;
+  font-size:13.5px;line-height:1.4}
+nav a:hover{background:var(--stage);color:var(--ink)}
+nav a.l2{color:var(--ink);font-weight:550;margin-top:9px}
+.kids{margin:2px 0 6px 9px;border-left:1px solid var(--line);padding-left:7px}
+nav a.l3{font-size:12.5px}
+main{padding:44px 52px 120px;min-width:0}
+h1,h2,h3,h4{font-family:var(--display);letter-spacing:-.015em;line-height:1.25}
+h1{font-size:2.1rem;margin:0 0 .6em}
+h2{font-size:1.5rem;margin:2.4em 0 .7em;padding-top:.5em;border-top:1px solid var(--line)}
+h3{font-size:1.16rem;margin:1.9em 0 .5em;color:var(--acc)}
+h4{font-size:1rem;margin:1.5em 0 .4em}
+p,li{max-width:78ch}
+a{color:var(--acc);text-decoration-thickness:1px;text-underline-offset:2px}
+code{font-family:var(--mono);font-size:.875em;background:var(--stage);
+  padding:.14em .4em;border-radius:5px}
+pre{background:var(--stage);border:1px solid var(--line);border-radius:10px;
+  padding:14px 16px;overflow-x:auto}
+pre code{background:none;padding:0;font-size:.83rem;line-height:1.6}
+table{border-collapse:collapse;width:100%;margin:1.1em 0;font-size:.93rem;display:block;overflow-x:auto}
+th,td{border:1px solid var(--line);padding:8px 11px;text-align:left;vertical-align:top}
+th{background:var(--stage);font-family:var(--display);font-weight:600;font-size:.86rem;
+  letter-spacing:.01em}
+blockquote{margin:1.2em 0;padding:.6em 1.1em;border-left:3px solid var(--acc);
+  background:var(--surface);border-radius:0 9px 9px 0;color:var(--ink)}
+blockquote p{margin:.45em 0}
+img{max-width:100%;height:auto;border:1px solid var(--line);border-radius:9px;display:block;margin:1.2em 0}
+hr{border:0;border-top:1px solid var(--line);margin:2.4em 0}
+kbd{font-family:var(--mono);font-size:.82em;border:1px solid var(--line);
+  border-bottom-width:2px;border-radius:5px;padding:.1em .4em;background:var(--surface)}
+@media (max-width:900px){
+  .wrap{grid-template-columns:1fr}
+  nav{position:static;height:auto;border-right:0;border-bottom:1px solid var(--line)}
+  main{padding:28px 20px 80px}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+<nav>
+  <a class="brand" href="#top"><span class="mk"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="30" height="30" role="img" aria-label="CCM"><style>.mk .s0{fill:#991b1b}.mk .s1{fill:#fecaca}.mk .s2{fill:#fca5a5}.mk .s3{fill:#f87171}.mk .s4{fill:#dc2626}@media (prefers-color-scheme:light){.mk .s0{fill:#7f1d1d}.mk .s1{fill:#f87171}.mk .s2{fill:#ef4444}.mk .s3{fill:#dc2626}.mk .s4{fill:#b91c1c}}</style><rect x="10" y="73" width="80" height="13" class="s0"/><rect x="16" y="33" width="14" height="44" class="s1"/><rect x="34" y="14" width="14" height="63" class="s2"/><rect x="52" y="45" width="14" height="32" class="s3"/><rect x="70" y="25" width="14" height="52" class="s4"/><rect x="32" y="20" width="18" height="10" fill="#0d1117"/></svg></span>
+    <span class="name">cloudcast<em>mixer</em></span></a>
+  <a class="l2" href="#contents">Contents</a><a class="l2" href="#1-core-concepts">1. Core concepts</a><div class="kids"><a class="l3" href="#the-desk-at-a-glance">The desk at a glance</a><a class="l3" href="#sources-streams-and-channels">Sources, streams and channels</a><a class="l3" href="#buses">Buses</a></div><a class="l2" href="#2-getting-started">2. Getting started</a><div class="kids"><a class="l3" href="#signing-in">Signing in</a><a class="l3" href="#the-surface">The surface</a><a class="l3" href="#the-header-status-row">The header status row</a></div><a class="l2" href="#3-the-channel-strip">3. The channel strip</a><div class="kids"><a class="l3" href="#patching-a-source">Patching a source</a><a class="l3" href="#trim-pan-and-balance">Trim, pan and balance</a><a class="l3" href="#pgm-assign">PGM assign</a><a class="l3" href="#the-fader-and-the-meter">The fader and the meter</a><a class="l3" href="#on-and-cue">ON and CUE</a><a class="l3" href="#aux-sends">Aux sends</a><a class="l3" href="#strip-badges">Strip badges</a></div><a class="l2" href="#4-banks">4. Banks</a><a class="l2" href="#5-the-main-meter-and-the-monitor">5. The main meter and the monitor</a><div class="kids"><a class="l3" href="#main-meter">Main meter</a><a class="l3" href="#headphones">Headphones</a><a class="l3" href="#cue-modes">Cue modes</a><a class="l3" href="#bus-trims">Bus trims</a></div><a class="l2" href="#6-cue-and-phones">6. Cue and PHONES</a><a class="l2" href="#7-processing">7. Processing</a><div class="kids"><a class="l3" href="#eq">EQ</a><a class="l3" href="#de-ess">De-ess</a><a class="l3" href="#dynamics">Dynamics</a></div><a class="l2" href="#8-mix-minus-and-backfeeds">8. Mix-minus and backfeeds</a><a class="l2" href="#9-sources">9. Sources</a><div class="kids"><a class="l3" href="#configured-sources">Configured sources</a><a class="l3" href="#discovered-on-the-network">Discovered on the network</a><a class="l3" href="#adding-a-source-manually">Adding a source manually</a></div><a class="l2" href="#10-outputs">10. Outputs</a><a class="l2" href="#11-console-profiles">11. Console profiles</a><div class="kids"><a class="l3" href="#what-a-profile-contains">What a profile contains</a><a class="l3" href="#saving">Saving</a><a class="l3" href="#recalling-is-safe">Recalling is safe</a><a class="l3" href="#managing-the-list">Managing the list</a></div><a class="l2" href="#12-clock">12. Clock</a><a class="l2" href="#13-intercom">13. Intercom</a><a class="l2" href="#14-control-surfaces">14. Control surfaces</a><a class="l2" href="#15-the-rack-panel">15. The rack panel</a><a class="l2" href="#16-accounts-roles-and-security">16. Accounts, roles and security</a><a class="l2" href="#17-themes">17. Themes</a>
+</nav>
+<main id="top">
+<h1 id="cloudcast-mixer-user-manual">CloudCast Mixer User Manual</h1>
+<p>CloudCast Mixer is an <strong>AES67 8-bus broadcast mixer</strong>: a realtime audio engine and its
+browser control surface, run as one service on Linux — on hardware, in EC2, or in a
+container. The desk has <strong>16 faders</strong>, four programme buses (<strong>PGM 1–4</strong>), four auxiliary
+buses (<strong>AUX 1–4</strong>), a <strong>per-fader mix-minus</strong> for every channel, and <strong>cue/PFL</strong> with
+monitoring in the operator&#39;s own browser.</p>
+<p>This manual is for the person driving the desk. It covers every panel of the control
+surface, the channel strip, mix-minus and backfeeds, sources and discovery, outputs,
+console profiles, the clock, intercom, physical control surfaces and the rack panel.
+Deployment — the container image, realtime privileges, PTP and firewalls — lives in the
+repository&#39;s <code>deploy/</code> documentation; the control API is specified in
+<code>docs/control-api.md</code>.</p>
+<p>Everything an operator touches on this desk is also available over REST and WebSocket, so
+anything this manual shows can be automated.</p>
+<hr>
+<h2 id="contents">Contents</h2>
+<ol>
+<li><a href="#1-core-concepts">Core concepts</a><ul>
+<li><a href="#the-desk-at-a-glance">The desk at a glance</a> · <a href="#sources-streams-and-channels">Sources, streams and channels</a> · <a href="#buses"><strong>Buses</strong></a></li>
+</ul>
+</li>
+<li><a href="#2-getting-started">Getting started</a><ul>
+<li><a href="#signing-in">Signing in</a> · <a href="#the-surface">The surface</a> · <a href="#the-header-status-row">The header status row</a></li>
+</ul>
+</li>
+<li><a href="#3-the-channel-strip">The channel strip</a><ul>
+<li><a href="#patching-a-source">Patching a source</a> · <a href="#trim-pan-and-balance">Trim, pan and balance</a> · <a href="#pgm-assign"><strong>PGM assign</strong></a> · <a href="#the-fader-and-the-meter">The fader and the meter</a> · <a href="#on-and-cue">ON and CUE</a> · <a href="#aux-sends">Aux sends</a> · <a href="#strip-badges">Strip badges</a></li>
+</ul>
+</li>
+<li><a href="#4-banks">Banks</a></li>
+<li><a href="#5-the-main-meter-and-the-monitor">The main meter and the monitor</a><ul>
+<li><a href="#main-meter">Main meter</a> · <a href="#headphones">Headphones</a> · <a href="#cue-modes"><strong>Cue modes</strong></a> · <a href="#bus-trims">Bus trims</a></li>
+</ul>
+</li>
+<li><a href="#6-cue-and-phones">Cue and PHONES</a></li>
+<li><a href="#7-processing">Processing</a><ul>
+<li><a href="#eq">EQ</a> · <a href="#de-ess">De-ess</a> · <a href="#dynamics">Dynamics</a></li>
+</ul>
+</li>
+<li><a href="#8-mix-minus-and-backfeeds">Mix-minus and backfeeds</a></li>
+<li><a href="#9-sources">Sources</a><ul>
+<li><a href="#configured-sources">Configured sources</a> · <a href="#discovered-on-the-network">Discovered on the network</a> · <a href="#adding-a-source-manually">Adding a source manually</a></li>
+</ul>
+</li>
+<li><a href="#10-outputs">Outputs</a></li>
+<li><a href="#11-console-profiles">Console profiles</a><ul>
+<li><a href="#what-a-profile-contains"><strong>What a profile contains</strong></a> · <a href="#saving">Saving</a> · <a href="#recalling-is-safe"><strong>Recalling is safe</strong></a> · <a href="#managing-the-list">Managing the list</a></li>
+</ul>
+</li>
+<li><a href="#12-clock">Clock</a></li>
+<li><a href="#13-intercom">Intercom</a></li>
+<li><a href="#14-control-surfaces">Control surfaces</a></li>
+<li><a href="#15-the-rack-panel">The rack panel</a></li>
+<li><a href="#16-accounts-roles-and-security">Accounts, roles and security</a></li>
+<li><a href="#17-themes">Themes</a></li>
+</ol>
+<hr>
+<h2 id="1-core-concepts">1. Core concepts</h2>
+<h3 id="the-desk-at-a-glance">The desk at a glance</h3>
+<p><img src="img/02-desk-overview.png" alt="The desk mid-programme: four live sources, cue engaged on Guest 1, the main meter on PGM 1"></p>
+<p>One service runs both halves of the product: the <strong>engine</strong>, a realtime audio process that
+mixes AES67 streams sample-exactly, and the <strong>control surface</strong>, the browser page in front
+of you. The surface never carries audio to air — closing the browser changes nothing on
+the plant. The one exception is deliberate: <strong>PHONES</strong> plays the cue bus <em>into your
+browser</em>, so you can pre-fade listen from wherever you are sitting (<a href="#6-cue-and-phones">§6</a>).</p>
+<h3 id="sources-streams-and-channels">Sources, streams and channels</h3>
+<p>Three ideas, in one direction:</p>
+<table>
+<thead>
+<tr>
+<th>Thing</th>
+<th>What it is</th>
+<th>Where it is managed</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>Stream</strong></td>
+<td>An AES67 endpoint — a multicast address the desk receives or transmits</td>
+<td>Sources tab (receive), Outputs tab (transmit)</td>
+</tr>
+<tr>
+<td><strong>Source</strong></td>
+<td>A named thing you can put on a fader — &quot;Host Mic&quot;, &quot;Playout&quot; — wired to a receive stream, carrying its own processing, backfeed and bus permissions</td>
+<td>Sources tab</td>
+</tr>
+<tr>
+<td><strong>Channel</strong></td>
+<td>One of the 16 faders, with a source patched to it</td>
+<td>Mixer tab</td>
+</tr>
+</tbody></table>
+<p>A fader&#39;s label is the name of the source patched to it. Processing and backfeed belong to
+the <strong>source</strong>, so they follow it onto whichever fader it is patched to.</p>
+<h3 id="buses">Buses</h3>
+<p>Eight mix buses, in two families:</p>
+<ul>
+<li><strong>PGM 1–4</strong> — programme buses. Every channel taps them <strong>post-fader</strong>: the fader and the
+ON switch always govern what reaches programme.</li>
+<li><strong>AUX 1–4</strong> — auxiliary buses, fed by per-channel <strong>aux sends</strong> with their own level and
+a selectable tap point (<a href="#aux-sends">§3</a>). Auxes carry mix-minus returns, IFB, FX — anything
+that is not programme.</li>
+</ul>
+<p>Each bus has a label, a master gain, and (once bound on the Outputs tab) an AES67 transmit
+stream. Beside the eight buses there is one <strong>cue</strong> bus (<a href="#6-cue-and-phones">§6</a>) and a
+<strong>headphones</strong> monitor selection (<a href="#5-the-main-meter-and-the-monitor">§5</a>).</p>
+<hr>
+<h2 id="2-getting-started">2. Getting started</h2>
+<h3 id="signing-in">Signing in</h3>
+<p><img src="img/01-login.png" alt="The sign-in view"></p>
+<p>Browse to the desk&#39;s address and sign in. The lead reads <strong>Sign in to open the desk.</strong> —
+enter <strong>Username</strong> and <strong>Password</strong> and press <strong>Sign in</strong>.</p>
+<p>A fresh installation has one account, <strong>admin</strong>. Its password is either the value the
+deployment set (<code>CCMIX_BOOTSTRAP_PASSWORD</code>) or a generated one printed once in the
+server&#39;s log at first start — it is stored hashed and cannot be recovered, only reset.
+Five failed attempts lock the account; sessions last 12 hours.</p>
+<h3 id="the-surface">The surface</h3>
+<p>Across the top, eight tabs: <strong>Mixer</strong>, <strong>Mix-Minus</strong>, <strong>Sources</strong>, <strong>Outputs</strong>,
+<strong>Intercom</strong>, <strong>Clock</strong>, <strong>Control Surface</strong>, <strong>Profiles</strong>. Everything in this manual
+lives under one of them. The <strong>Mixer</strong> tab is the desk itself: the channel strips in two
+banks of eight, with the main meter and monitor section on the right.</p>
+<h3 id="the-header-status-row">The header status row</h3>
+<p>The right side of the header is always visible, whatever tab you are on:</p>
+<table>
+<thead>
+<tr>
+<th>Control</th>
+<th>What it tells you</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>PHONES</strong></td>
+<td>Plays the cue bus in this browser (<a href="#6-cue-and-phones">§6</a>)</td>
+</tr>
+<tr>
+<td><strong>CUE</strong> counter and level</td>
+<td>How many channels are cued, and the cue master level; <strong>CLEAR</strong> drops every engagement</td>
+</tr>
+<tr>
+<td>Profile badge</td>
+<td>The active profile&#39;s name; its dot lights when the desk differs from what was last saved (<a href="#11-console-profiles">§11</a>)</td>
+</tr>
+<tr>
+<td><strong>Connected</strong></td>
+<td>The live WebSocket to the desk. <strong>Connecting…</strong> means the surface is not currently talking to the mixer — what you see may be stale</td>
+</tr>
+<tr>
+<td><strong>Dark</strong> / <strong>Light</strong></td>
+<td>The desk&#39;s own theme toggle (<a href="#17-themes">§17</a>)</td>
+</tr>
+<tr>
+<td>Account badge</td>
+<td>Who you are signed in as, a <strong>read-only</strong> chip if your role cannot operate the desk, and <strong>Sign out</strong></td>
+</tr>
+</tbody></table>
+<hr>
+<h2 id="3-the-channel-strip">3. The channel strip</h2>
+<p><img src="img/03-channel-strip.png" alt="One channel strip: source, trim, badges, balance, PGM assigns, fader and meter, ON, CUE, aux sends"></p>
+<p>Top to bottom, every strip is the same instrument.</p>
+<h3 id="patching-a-source">Patching a source</h3>
+<p><img src="img/04-source-picker.png" alt="The source picker open on a strip"></p>
+<p>The button under the strip&#39;s name shows the patched source (or <strong>NO SOURCE</strong>). Click it to
+open the picker and choose from the configured sources (<a href="#9-sources">§9</a>); the <strong>×</strong> beside it
+clears the patch. Under the source name the strip shows the wire format — e.g.
+<strong>STEREO · L24</strong> — or <strong>not wired to a stream</strong> for a source with no stream yet.</p>
+<p>Two health badges can appear here, and they mean different things:</p>
+<ul>
+<li><strong>NO SIGNAL</strong> — the desk is not receiving the source&#39;s stream at all.</li>
+<li><strong>STALLED — audio thread late</strong> — packets are arriving but the audio engine is not
+keeping up. On a correctly deployed mixer this indicates the host is starving the
+realtime thread — see the deployment documentation&#39;s realtime privileges.</li>
+</ul>
+<h3 id="trim-pan-and-balance">Trim, pan and balance</h3>
+<p>The stepper under the source sets <strong>input trim</strong>, −20 to +20 dB — gain before everything
+else on the strip. Below the badges, a mono source gets <strong>Pan</strong> and a stereo source gets
+<strong>Balance</strong>; the centre button returns it to <strong>C</strong>.</p>
+<h3 id="pgm-assign">PGM assign</h3>
+<p>The four numbered buttons <strong>1 2 3 4</strong> assign the channel to PGM 1–4. Lit red means
+assigned. A source&#39;s configuration can forbid particular buses (<a href="#configured-sources">§9</a>); a
+forbidden assignment renders disabled with the reason in its tooltip.</p>
+<h3 id="the-fader-and-the-meter">The fader and the meter</h3>
+<p>The fader sets the channel&#39;s level into every post-fader destination. Beside it, the
+channel meter draws the source&#39;s level — peak with a true-peak tick — and, when the
+source&#39;s processing is engaged, a narrow <strong>gain-reduction</strong> column alongside
+(<a href="#7-processing">§7</a>). Meters update 25 times a second and read down to −50 dBFS.</p>
+<h3 id="on-and-cue">ON and CUE</h3>
+<p><strong>ON</strong> puts the channel on air — it is the switch between the fader and every destination.
+<strong>OFF</strong> is not a mute button on a live path so much as the channel not being open at all:
+backfeeds can switch what they return based on it (<a href="#8-mix-minus-and-backfeeds">§8</a>).</p>
+<p><strong>CUE</strong> engages pre-fade listen on the cue bus — see <a href="#6-cue-and-phones">§6</a>. While the desk
+confirms the engagement the button shows a dashed ring; solid means the engine has it.</p>
+<h3 id="aux-sends">Aux sends</h3>
+<p><img src="img/05-aux-sends.png" alt="A strip with its aux sends open"></p>
+<p>The <strong>AUX</strong> row at the strip&#39;s foot expands into one row per aux bus. Each send has an
+enable, a level (−60 to +10 dB), and a <strong>tap point</strong>:</p>
+<table>
+<thead>
+<tr>
+<th>Tap</th>
+<th>Face</th>
+<th>Behaviour</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Pre</td>
+<td><strong>PRE</strong></td>
+<td><em>always on</em> — feeds the aux regardless of the fader and the ON switch</td>
+</tr>
+<tr>
+<td>Pre-fader</td>
+<td><strong>PRE-FADER</strong></td>
+<td><em>follows ON</em> — open whenever the channel is on, at send level</td>
+</tr>
+<tr>
+<td>Post</td>
+<td><strong>POST</strong></td>
+<td><em>follows fader</em> — the send follows the fader and ON, like programme does</td>
+</tr>
+</tbody></table>
+<p><strong>PRE</strong> is the tap for mix-minus returns — the far end keeps hearing the studio even when
+their own fader is closed. The <strong>Aux sends: Shown / Hidden</strong> toggle on the toolbar opens
+and closes the section on every strip at once.</p>
+<h3 id="strip-badges">Strip badges</h3>
+<table>
+<thead>
+<tr>
+<th>Badge</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>DSP</strong></td>
+<td>The source&#39;s processing is engaged (not bypassed) — <a href="#7-processing">§7</a></td>
+</tr>
+<tr>
+<td><strong>BF</strong></td>
+<td>This fader carries the source&#39;s backfeed return — <a href="#8-mix-minus-and-backfeeds">§8</a></td>
+</tr>
+<tr>
+<td><strong>BF→3</strong></td>
+<td>The source&#39;s backfeed is carried by another fader (here, fader 3)</td>
+</tr>
+<tr>
+<td><strong>PROC</strong></td>
+<td>Opens the processing dialog</td>
+</tr>
+</tbody></table>
+<hr>
+<h2 id="4-banks">4. Banks</h2>
+<p><img src="img/08-bank-badge.png" alt="The bank selector with activity badges on both banks"></p>
+<p>The desk&#39;s 16 faders present as two banks: <strong>CH 1–8</strong> and <strong>CH 9–16</strong>. A badge on the
+unselected bank counts its channels that are ON, so a live microphone can never hide
+behind the bank you are not looking at — the badge turns red when any of them is assigned
+to programme (on air), and its tooltip counts both states.</p>
+<hr>
+<h2 id="5-the-main-meter-and-the-monitor">5. The main meter and the monitor</h2>
+<p><img src="img/06-monitor-sidebar.png" alt="The rack sidebar: main meter on PGM 1, and the monitor section with headphones selection and cue mode"></p>
+<h3 id="main-meter">Main meter</h3>
+<p>The <strong>MAIN METER</strong> draws one bus, stereo, with a numeric peak readout beneath. The
+<strong>P1–P4 / A1–A4</strong> selector chooses which bus it follows. A clip latches at the top of the
+scale until <strong>Clear clip</strong> is pressed — a clip that happened while you looked away still
+shows.</p>
+<h3 id="headphones">Headphones</h3>
+<p><strong>HEADPHONES</strong> selects what you monitor — any PGM or AUX bus — with its own level stepper.
+This is the monitor selection the cue system plays against.</p>
+<h3 id="cue-modes">Cue modes</h3>
+<p>How cue interacts with your monitoring, selectable as three modes:</p>
+<table>
+<thead>
+<tr>
+<th>Mode</th>
+<th>Face</th>
+<th>Behaviour</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Split</td>
+<td><strong>SPLIT</strong></td>
+<td><em>Air left, cue right</em></td>
+</tr>
+<tr>
+<td>Mix</td>
+<td><strong>MIX</strong></td>
+<td><em>Cue over a dimmed selection</em> — the dim depth stepper appears below, and dims <strong>the selection under cue. Never cue itself.</strong></td>
+</tr>
+<tr>
+<td>Takeover</td>
+<td><strong>TAKEOVER</strong></td>
+<td><em>Cue replaces the selection</em></td>
+</tr>
+</tbody></table>
+<h3 id="bus-trims">Bus trims</h3>
+<p><strong>BUS TRIMS</strong> gives every one of the eight buses a master gain stepper (−20 to +20 dB)
+without leaving the desk.</p>
+<hr>
+<h2 id="6-cue-and-phones">6. Cue and PHONES</h2>
+<p><img src="img/07-cue-section.png" alt="The cue controls in the header: PHONES, the engagement counter, cue master and CLEAR"></p>
+<p>Pressing a strip&#39;s <strong>CUE</strong> puts that channel, pre-fade, on the cue bus. The header shows
+the count of engaged channels, the <strong>CUE</strong> master level stepper (−60 to +10 dB), and
+<strong>CLEAR</strong>, which drops every engagement at once.</p>
+<p><strong>PHONES</strong> plays the cue bus <em>in this browser</em> — the one place the surface carries audio.
+Browsers hold audio until the page has been interacted with; if you press <strong>PHONES</strong>
+before touching anything else the desk shows <strong>The browser is holding audio until you
+interact with the page.</strong> with a retry button.</p>
+<p>Cue engagement and the cue master are <strong>runtime state, not profile state</strong>: a restart or a
+profile recall comes up with nothing in the headphones, deliberately.</p>
+<hr>
+<h2 id="7-processing">7. Processing</h2>
+<p><img src="img/09-dsp-eq.png" alt="The processing dialog on the EQ tab"></p>
+<p>Each source carries its own processing chain, opened with the strip&#39;s <strong>PROC</strong> button. The
+dialog&#39;s subtitle states the model: <strong>Belongs to the source — it follows it onto any
+fader.</strong> Its header meters show the processed output (<strong>OUT</strong>) and gain reduction
+(<strong>GR</strong>) live. Three tabs: <strong>EQ</strong>, <strong>De-ess</strong>, <strong>Dynamics</strong>.</p>
+<h3 id="eq">EQ</h3>
+<p>Parametric EQ with a draggable response curve. Each band selects its type — <strong>Peak</strong>,
+<strong>Low shelf</strong>, <strong>High shelf</strong>, <strong>High-pass</strong>, <strong>Low-pass</strong> — with frequency, gain and Q,
+plus an overall trim.</p>
+<h3 id="de-ess">De-ess</h3>
+<p>A dedicated de-esser with the usual threshold and frequency-region controls.</p>
+<h3 id="dynamics">Dynamics</h3>
+<p><img src="img/10-dsp-dynamics.png" alt="The processing dialog on the Dynamics tab, gain reduction live"></p>
+<p><strong>Compressor</strong> and <strong>Gate</strong>, each with an enable, threshold, ratio, knee, attack, release
+and make-up, with <strong>Auto make-up</strong> and <strong>Auto release</strong> options; the limiter lives at the
+end of the same tab. While the compressor works, the strip&#39;s meter grows its
+gain-reduction column and the strip shows the <strong>DSP</strong> badge.</p>
+<hr>
+<h2 id="8-mix-minus-and-backfeeds">8. Mix-minus and backfeeds</h2>
+<p><img src="img/11-mixminus.png" alt="The Mix-Minus tab: one row per fader, live bus and configured pair"></p>
+<p>Every fader has a mix-minus feed: a return to the far end that is <em>everything minus
+themselves</em>, derived sample-exactly so a caller never hears their own voice late. The
+<strong>Mix-Minus</strong> tab is the desk-wide view — one row per channel showing the source patched,
+the bus the return is derived from <strong>now</strong>, the configured <strong>ON x · OFF y</strong> pair,
+<strong>MONO</strong>/<strong>STEREO</strong>, and <strong>Backfeed off</strong> or <strong>No source patched to this fader</strong> where
+that is the state.</p>
+<p>The configuration itself belongs to the <strong>source</strong> — the row&#39;s <strong>Edit on …</strong> button jumps
+to it on the Sources tab. A backfeed configures:</p>
+<ul>
+<li>the bus the return derives from while the fader is <strong>ON</strong> (typically the aux carrying
+the studio&#39;s mix-minus),</li>
+<li>an optional different bus while the fader is <strong>OFF</strong> (typically programme, so a
+contributor waiting to come on hears air),</li>
+<li>mono or stereo, and the transmit stream that carries it back.</li>
+</ul>
+<p>Because the mix-minus subtracts with the same per-sample ramps as the bus sum, the
+cancellation holds <em>during</em> fader moves, not just at rest.</p>
+<hr>
+<h2 id="9-sources">9. Sources</h2>
+<p><img src="img/12-sources.png" alt="The Sources tab: configured sources above, SAP discovery below"></p>
+<h3 id="configured-sources">Configured sources</h3>
+<p><strong>Configured sources</strong> is the desk&#39;s own list — everything that can be patched to a
+fader. Each row shows the wire (address, <strong>STEREO · L24</strong>, …) and a <strong>CH n</strong> chip naming
+the fader(s) it is patched to, or <strong>no stream wired</strong> for a placeholder. Expanding a row
+opens its four sections: <strong>Name</strong>, <strong>Permitted buses</strong>, <strong>Backfeed</strong>, <strong>Processing</strong>.</p>
+<p><img src="img/13-source-expanded.png" alt="A source expanded: name, permitted buses, backfeed and processing"></p>
+<p><strong>Permitted buses</strong> restricts which buses the source may be assigned to — a talkback
+microphone that must never reach programme is enforced here, and the strip&#39;s forbidden
+PGM buttons render disabled with the reason. A source that is configured but not
+currently announcing on the network wears a <strong>NOT ANNOUNCING</strong> badge. <strong>Delete source</strong>
+is refused while the source is patched to any fader.</p>
+<h3 id="discovered-on-the-network">Discovered on the network</h3>
+<p><strong>Discovered on the network</strong> lists what is announcing right now over SAP. The panel&#39;s own
+hint states the model: discovery is how a source is <em>found</em>, never how it is <em>owned</em>.
+<strong>Promote to source</strong> turns an announcement into a configured source with one click and a
+name; announcements that match something already configured say so. <strong>Refresh</strong> re-asks.</p>
+<h3 id="adding-a-source-manually">Adding a source manually</h3>
+<p><img src="img/14-manual-source.png" alt="The manual source form"></p>
+<p><strong>+ Add source manually</strong> is for endpoints that do not announce — an ISDN codec, a fixed
+encoder. Fields: <strong>Name</strong>, <strong>Address</strong>, <strong>Port</strong>, <strong>Channels</strong> (<strong>1 (mono)</strong> / <strong>2
+(stereo)</strong>), <strong>Encoding</strong> (<strong>L24</strong>/<strong>L16</strong>), <strong>Packet time (µs)</strong>, <strong>TTL</strong>.</p>
+<hr>
+<h2 id="10-outputs">10. Outputs</h2>
+<p><img src="img/15-outputs.png" alt="The Outputs tab: output routing per bus, monitor outputs below"></p>
+<p><strong>Output routing</strong> is where buses become AES67 transmit streams. The panel&#39;s hint is the
+contract: binding creates the transmit endpoint and points the bus at it in one step;
+unbinding stops the bus transmitting immediately, so it always asks first.</p>
+<p><img src="img/16-output-bind.png" alt="An output&#39;s bind form open"></p>
+<p>Each row carries a compact meter and transmit health — packets, starvation, errors. The
+bind form takes <strong>Label</strong>, <strong>Address</strong>, <strong>Port</strong>, <strong>Channels</strong>, <strong>Encoding</strong>, <strong>Packet
+time (µs)</strong>, <strong>TTL</strong>. Unbinding warns in place — <strong>Unbinding will stop … transmitting
+to …</strong> — and waits for confirmation.</p>
+<p><strong>Monitor outputs</strong> gives the <strong>cue</strong> bus and the <strong>headphones</strong> selection their own
+transmit streams, for a physical monitor feed in the studio.</p>
+<hr>
+<h2 id="11-console-profiles">11. Console profiles</h2>
+<p><img src="img/19-profiles.png" alt="The Profiles tab: the active profile, the saved list, and per-profile actions"></p>
+<h3 id="what-a-profile-contains">What a profile contains</h3>
+<p>A profile is the desk&#39;s setup for a show: source configuration, labels, trims, PGM
+assignments, aux sends and tap points, backfeeds, bus labels and trims. Operators switch
+profiles between programmes and expect the desk to come back exactly as they left it.</p>
+<p>Two kinds of state are deliberately <strong>not</strong> in a profile:</p>
+<ul>
+<li><strong>Performance</strong> — fader positions, ON states, cue engagements. These reset on load, for
+the same reason they reset on restart.</li>
+<li><strong>Machine-local</strong> — stream addresses and bindings, interface names, clock
+configuration, accounts. A profile is portable between mixers; anything that would
+break when carried to another machine is kept out of it.</li>
+</ul>
+<h3 id="saving">Saving</h3>
+<p>The bar names the <strong>Active profile</strong> and tracks <strong>Unsaved changes</strong> / <strong>Saved</strong> — the
+same state as the header badge&#39;s dot. <strong>Save to active profile</strong> writes the desk as it is
+now. There is no autosave: the desk you shaped during a show does not overwrite the
+profile behind you unless you say so.</p>
+<h3 id="recalling-is-safe">Recalling is safe</h3>
+<p><img src="img/20-profiles-recall-warning.png" alt="The recall confirmation"></p>
+<p><strong>Recall</strong> activates another profile — after a confirmation (<strong>Recall anyway</strong> /
+<strong>Cancel</strong>) if the desk has unsaved changes. A recall <strong>never puts audio to air</strong>: the
+desk comes up with every fader closed and every channel off, so recalling mid-programme
+cannot surprise you with an open microphone.</p>
+<h3 id="managing-the-list">Managing the list</h3>
+<p><strong>+ New profile</strong> creates one at factory settings; each row offers <strong>Recall</strong>,
+<strong>Duplicate</strong>, <strong>Delete</strong> and inline rename. The active profile and the last remaining
+profile cannot be deleted, and the rows say so.</p>
+<hr>
+<h2 id="12-clock">12. Clock</h2>
+<p><img src="img/17-clock.png" alt="The Clock tab"></p>
+<p>AES67 lives and dies by its media clock, and the <strong>Clock</strong> tab shows what the desk&#39;s
+clock is actually doing: the PTP port state, interface, timestamping and delay mechanism,
+the grandmaster&#39;s identity and qualifications (priorities, clock class, accuracy,
+variance, time source), offset from master and mean path delay. When the desk cannot make
+a conformant claim — no PTP hardware clock, a free-running grandmaster — this panel says
+so rather than implying lock. A trend table records recent clock behaviour.</p>
+<hr>
+<h2 id="13-intercom">13. Intercom</h2>
+<p><img src="img/21-intercom.png" alt="The Intercom tab"></p>
+<p>When the deployment wires the desk to a RemoteTalk intercom, the <strong>Intercom</strong> tab is a
+key panel: a grid of channels with <strong>TALK</strong> and <strong>LISTEN</strong> keys, tallies for who is
+talking, page tabs for larger panels, and a <strong>REC</strong> chip on channels being recorded. The
+header&#39;s intercom indicator lights for an incoming private call from anywhere in the
+surface, and clicking it jumps here. Without an intercom configured the tab reports that
+plainly.</p>
+<hr>
+<h2 id="14-control-surfaces">14. Control surfaces</h2>
+<p><img src="img/18-control-surface.png" alt="The Control Surface tab"></p>
+<p>The <strong>Control Surface</strong> tab pairs a physical Stream Deck with the desk over WebHID. The
+capability block reports what this browser can do — from <strong>Not in this browser</strong> and
+<strong>Not from this address</strong> through <strong>Ready — nothing granted yet</strong> to <strong>Granted</strong> — and
+<strong>Connect a control surface</strong> asks the browser to grant a device; <strong>Forget this device</strong>
+revokes it. The panel states the mapping in sentences: keys cue channels exactly as the
+CUE buttons on the mixer do, and the rotaries follow the desk&#39;s selection.</p>
+<p>Grants are per-browser and per-address, and WebHID requires a secure context — the
+capability block names whichever of these is the obstacle.</p>
+<hr>
+<h2 id="15-the-rack-panel">15. The rack panel</h2>
+<p><img src="img/22-rack-panel.png" alt="The rack panel in demo mode"></p>
+<p><code>/panel</code> is a chrome-free strip built for a rack display or an under-monitor screen:
+per-channel level, ON and CUE state, and the four programme meters, with a <strong>LIVE</strong> /
+<strong>DOWN</strong> connection pill. URL parameters shape it — <code>theme</code>, <code>width</code>, <code>channels</code>,
+<code>meters</code>, <code>controls</code> — so one bookmark is one panel.</p>
+<p>The <strong>DEMO</strong> toggle draws invented levels for demonstrations; its own tooltip is the
+contract: <strong>Show invented levels for a demonstration. Nothing on the desk changes.</strong> The
+screenshot above is the panel in demo mode.</p>
+<hr>
+<h2 id="16-accounts-roles-and-security">16. Accounts, roles and security</h2>
+<p>Every surface — browser, REST, WebSocket — authenticates. There is no anonymous desk
+unless the deployment explicitly enables a read-only or operator panel fallback, and that
+fallback is logged loudly at every start.</p>
+<ul>
+<li><strong>Roles</strong>: an account may read, operate (write), or administer. A signed-in account
+that cannot operate sees the desk with a <strong>read-only</strong> chip and disabled controls.</li>
+<li><strong>Admin</strong>&#39;s password is set at bootstrap or generated and printed once; change it with
+the API&#39;s password endpoint. Accounts are managed over the REST API
+(<code>/api/auth/users</code>); there is no user-management panel on the surface.</li>
+<li>Five failed sign-ins lock an account. Sessions expire after 12 hours.</li>
+<li>Every administrative and operational mutation lands in the audit log (<code>/api/audit</code>).</li>
+</ul>
+<hr>
+<h2 id="17-themes">17. Themes</h2>
+<p><img src="img/23-desk-light.png" alt="The desk in the light theme"></p>
+<p>The <strong>Dark</strong> / <strong>Light</strong> toggle in the header switches the desk&#39;s own theme. The desk
+owns this deliberately — it does not follow the operating system — so a rack display
+pinned to dark stays dark whatever the host machine decides.</p>
+<hr>
+<p><em>Manual generated against CloudCast Mixer as of 2026-08-25 (main @ ea6da2c, CCM-1…291).
+Screenshots were captured with <code>build/manual-screenshots.mjs</code> against a real
+<code>ccmix-server</code> on the AES67 transport, fed by the repository&#39;s <code>ccmix-testsrc</code>
+identification tone on loopback multicast — every meter shows genuine signal, and the
+levels shown are that test signal, not programme. The one exception is §15&#39;s rack panel,
+photographed in the product&#39;s own DEMO mode, which the panel itself labels. The Clock
+panel shows the no-PTP state of the capture host; the Intercom panel is shown without a
+RemoteTalk connection.</em></p>
+
+</main>
+</div>
+</body>
+</html>
